@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Web_API - UI</title>
+	<style type="text/css">
+		body {
+			background-color: gray;
+			align-items: center;		
+		}
+		
+		button  {
+			margin-bottom: 20px;		
+			border-radius: 10px;		
+		}	
+		
+		button a {
+			position: relative;
+			text-decoration: none;		
+			color: black;
+		}
+		
+		#page {
+			margin: auto;
+			background-color: white;
+			box-shadow: 10px 10px 10px 10px black;
+			border: 2px black solid;
+			border-radius: 10px;
+			text-align: center;
+			width: 70%;
+			height: 100%;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="page">
+		<h1>Home Page</h1>
+		<div id="user_roles">
+			<button>
+				<a href="/MVC_WEB/User/registerUser.html"> Register User </a>
+			</button>
+			<button onclick="getCPF('update_user')">
+				<a id="update_user" href="/MVC_WEB/User/updateUser.html"> Update User </a>
+			</button>
+			<button>
+				<a id="delete_user" href="/MVC_WEB/User/deleteUser.html" > Delete User </a>
+			</button>
+			<button onclick="getCPF('get_user')">
+				<a id="get_user" href="/MVC_WEB/UserAPI"> Get User </a>
+			</button>
+			<button>
+				<a href="/MVC_WEB/UserAPI?list_users=true"> List Users </a>
+			</button>
+		</div>		
+		<div id="address_roles">
+			<button onclick="getCPF('register_address')">
+				<a id="register_address" href="/MVC_WEB/Address/registerAddress.html"> Register Address </a>
+			</button>
+			<button onclick="getAddr('update_address')">
+				<a id="update_address" href="/MVC_WEB/Address/updateAddress.html"> Update Address </a>
+			</button>
+			<button>
+				<a href="/MVC_WEB/Address/deleteAddress.html"> Delete Address </a>
+			</button>
+			<button onclick="getCPF()">
+				<a id="" href="/MVC_WEB/Search/findAddress.html"> Get Address </a>
+			</button>
+			<button>
+				<a href="/MVC_WEB/UserAPI?list_users=true"> List Address </a>
+			</button>
+		</div>		
+	</div>
+</body>
+<script type="text/javascript">
+	function getCPF(idElement){
+		var cpf = prompt("Please, enter CPF user", "000.000.000-00")
+		console.log(idElement);
+		if(cpf != null){
+			var e = document.getElementById(idElement);	
+			
+			cpf = maskCPF(cpf);			
+			
+			e.setAttribute("href",e.href.split("?")[0] + "?user_cpf=" + cpf);
+		}
+	}
+	
+	function maskCPF(cpf){
+		var value = "";
+		cpf = cpf.replaceAll(".","").replaceAll("-","");		
+		for(i = 0; i < cpf.length; i++){
+			if(i == 3) value += cpf.substr(0, 3) + "." + cpf.substr(i, 1);
+			else if(i == 6) value +=  cpf.substr(4, 2) + "." + cpf.substr(i, 1);
+			else if(i == 9) value +=  cpf.substr(7, 2) + "-" + cpf.substr(i, 2);			
+		}
+		return value;
+	}
+</script>
+</html>

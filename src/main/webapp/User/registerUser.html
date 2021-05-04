@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Register</title>
+<style type="text/css">
+	body {
+		background-color: gray;
+		align-items: center;		
+	}
+	button {
+		color: black;
+	}	
+	#page {
+		margin: auto;
+		background-color: white;
+		box-shadow: 10px 10px 10px 10px black;
+		border: 2px black solid;
+		border-radius: 10px;
+		text-align: center;
+		width: 70%;
+		height: 100%;
+	}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="page">
+		<h1>User Register</h1>
+		<form method="post" action="/MVC_WEB/UserAPI">			
+			<p>
+				<label for="user_name">Name:</label>
+				<input type="text" id="user_name" name="user_name" placeholder="Name of User" required>
+			</p>		
+			<p>
+				<label for="user_cpf">CPF:</label>
+				<input type="text" id="user_cpf" name="user_cpf" placeholder="123.456.789-11" onchange="maskCPF(this)" 
+					required maxlength="14">
+			</p>
+			<p>
+				<label for="user_birthday">Birthday:</label>
+				<input type="date" id="user_birthday" name="user_birthday">
+			</p>
+			<p>
+				<label for="user_email">E-mail:</label>
+				<input type="email" id="user_email" name="user_email" placeholder="user@email.com" required>
+			</p>
+			<p>
+				<label for="user_color">Color:</label>
+				<input type="color" id="user_color" name="user_color">
+			</p>			
+			<p>						
+				<input type="submit" value="Register">				
+				<button><a href="/MVC_WEB/home.html" style="text-decoration: none; color: black;">Cancel</a></button>						
+			</p>			
+		</form>	
+	</div>
+</body>
+<script type="text/javascript">
+	function maskCPF(element){
+		var value = "";
+		var cpf = element.value.replaceAll(".","").replaceAll("-","");		
+		for(i = 0; i < cpf.length; i++){
+			if(i == 3) value += cpf.substr(0, 3) + "." + cpf.substr(i, 1);
+			else if(i == 6) value +=  cpf.substr(4, 2) + "." + cpf.substr(i, 1);
+			else if(i == 9) value +=  cpf.substr(7, 2) + "-" + cpf.substr(i, 2);			
+		}
+		element.value = value;
+	}
+</script>
+</html>

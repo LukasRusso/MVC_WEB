@@ -1,0 +1,24 @@
+CREATE DATABASE Web_API;
+
+use Web_API;
+
+CREATE TABLE User (
+    user_id int AUTO_INCREMENT PRIMARY KEY,
+    user_name varchar(255) NOT NULL,
+    user_birthday date, 
+    user_email varchar(255),
+    user_color varchar(7),
+    user_cpf varchar(14) NOT NULL UNIQUE    
+);
+
+CREATE TABLE Address (
+    addr_id int AUTO_INCREMENT PRIMARY KEY,
+    addr_userId int NOT NULL,
+    addr_street varchar(255),
+    addr_number int,
+    addr_city varchar(50),
+    addr_state varchar(50),
+    addr_country varchar(50),
+    addr_cep varchar(9),
+    FOREIGN KEY(addr_userId) REFERENCES User(user_id)
+);

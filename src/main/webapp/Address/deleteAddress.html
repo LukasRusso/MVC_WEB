@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Find User</title>
+	<style type="text/css">
+		body {
+			background-color: gray;
+			align-items: center;		
+		}
+		
+		button  {
+			margin-bottom: 20px;		
+			border-radius: 10px;		
+		}	
+		
+		button a {
+			position: relative;
+			text-decoration: none;		
+			color: black;
+		}
+		
+		#page {
+			margin: auto;
+			background-color: white;
+			box-shadow: 10px 10px 10px 10px black;
+			border: 2px black solid;
+			border-radius: 10px;
+			text-align: center;
+			width: 70%;
+			height: 100%;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="page">
+		<h1>Delete Address</h1>
+		<form method="delete" action="/MVC_WEB/UserAPI">
+			<p hidden>				
+				<input type="text" id="user_id" name="user_update">
+			</p>
+			<p>
+				<label for="user_cpf">CPF:</label>
+				<input type="text" id="user_cpf" name="user_cpf" placeholder="123.456.789-11"
+					pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+			</p>			
+			<p>						
+				<input type="submit" value="Find">
+			</p>	
+		</form>
+	</div>	
+</body>
+</html>
