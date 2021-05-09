@@ -160,7 +160,11 @@
 			contentyType: "application/json",
 			statusCode: {
 				200: function(data){
-					console.log(data)
+					if(Object.keys(data).includes("erro") && data.erro == true){
+						alert("CEP not Found!");
+						return;
+					}
+						
 					document.getElementById("addr_street").value = data.logradouro;
 					document.getElementById("addr_city").value = data.localidade;
 					document.getElementById("addr_state").value = data.uf;

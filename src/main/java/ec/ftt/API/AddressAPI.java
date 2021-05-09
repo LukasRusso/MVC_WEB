@@ -42,7 +42,7 @@ public class AddressAPI extends HttpServlet {
 			if(list) {
 				addrs = dao.listAddress();				
 				
-				resp +=  "{\"Status\":200, \"Address\":[";
+				resp +=  "{\"Status\":200, \"Address\":[ ";
 				while(!addrs.isEmpty()) {					
 					resp += gson.toJson(addrs.remove(0)) + ",";
 				}	
@@ -75,8 +75,9 @@ public class AddressAPI extends HttpServlet {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			response.getWriter().append("{\"Status\": 500}");			
 			response.setStatus(500);
+			response.getWriter().append("{\"Status\": 500}");			
+			
 		}	
 	}
 	
