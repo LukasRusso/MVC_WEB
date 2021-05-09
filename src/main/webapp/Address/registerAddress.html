@@ -70,15 +70,25 @@
 	function updateHtml() {	
 		var route = "/MVC_WEB/UserAPI?user_cpf=" + window.location.search.split('=')[1];
 		
-		$.ajax({url: route, method: "GET"})
+		$.ajax({url: route, method: "GET",
+			success: function(response){
+				checkAddress(response.User.id);
+				document.getElementById("addr_userId").value = response.User.id;
+			},
+			error: function(){
+				window.location.href = route;
+			}});
+	}
+	
+	function checkAddress(userID){		
+		var routerAddres = "/MVC_WEB/AddressAPI?addr_userId=" + userID;
+		var routerUpdateAddress = "/MVC_WEB/Address/updateAddress.html?user_cpf=" + window.location.search.split('=')[1];
+		
+		$.ajax({url: routerAddres, method: "GET"})
 			.done(function (response) {				
-				var data = response;
-				
+				var data = response;				
 				if(data.Status == 200){
-					document.getElementById("addr_userId").value = data.User.id;					
-				}
-				else {
-					window.location.href = "/MVC_WEB/AddressAPI?addr_userId=";
+					window.location.href = routerUpdateAddress;
 				}
 			})
 	}

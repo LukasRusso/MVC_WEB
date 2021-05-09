@@ -31,7 +31,9 @@ public class UserDAO {
 			statement.setString(5, user.getCpf());	
 			
 			return statement.executeUpdate();
-		} catch (SQLException e) {			
+		} catch (SQLException e) {		
+			e.printStackTrace();
+			
 			if(e.getMessage().contains("Duplicate entry")) 
 				return 409;					
 			
@@ -129,14 +131,18 @@ public class UserDAO {
 			if(connection == null) {
 				return 500;
 			}
-			
+						
 			String sqlStatement = "Delete FROM Web_API.User WHERE user_cpf = ?";			
 			PreparedStatement statement = connection.prepareStatement(sqlStatement);			
 			statement.setString(1, cpf);
 			
 			return statement.executeUpdate();			
 		} catch (SQLException e) {			
-			e.printStackTrace();			
+			e.printStackTrace();	
+			
+			if(e.getMessage().contains("foreign key constraint fails"))
+				return 409;			
+			
 			return 500;
 		}
 	}

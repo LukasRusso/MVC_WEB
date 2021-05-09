@@ -97,11 +97,13 @@
 		$.ajax({
 			url: route, 
 			headers: {"Content-Type":"application/json", "charset":"UTF-8"}, 
-			method: "PUT", data: user,})
-			.done(function(){
+			method: "PUT", data: user,
+			success: function(){
 				window.location.href = route + "?user_cpf=" + user.user_cpf;
-			});
-		
+			},
+			error: function(response){
+				alert(response.status + " - User couldn't be update!");
+			}});
 	}
 </script>
 </html>

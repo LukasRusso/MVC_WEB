@@ -15,6 +15,7 @@ public class ValidaUser {
 		
 		return error;
 	}
+	
 	private boolean checkBirthday(User user) {
 		Date now = new Date();
 		

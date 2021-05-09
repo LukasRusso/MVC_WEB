@@ -42,6 +42,9 @@
 			<input type="text" id="user_cpf" name="user_cpf" placeholder="123.456.789-11"
 				onchange="maskCPF(this)">
 		</p>			
+		<button>
+			<a href="/MVC_WEB/home.html"> Cancel </a>
+		</button>
 		<button id="delete" onclick="deleteUser()">Delete</button>		
 	</div>	
 </body>
@@ -58,11 +61,15 @@ function maskCPF(element){
 }
 
 function deleteUser(){
+	var del = confirm("User will be deleted, continue?");
+	
+	if(!del) return;	
+	
 	var data = {
 		"user_cpf": document.getElementById("user_cpf").value
 	};
 	
-	var route = "/MVC_WEB/UserAPI?user_cpf=" + data.user_cpf;
+	var route = "/MVC_WEB/UserAPI";
 	
 	$.ajax({
 		url: route, 
@@ -72,11 +79,13 @@ function deleteUser(){
 			204: function(response){
 				alert("User has been deleted - CPF: " + data.user_cpf);
 			},
+			409: function(response){				
+				alert("409 - " + response.responseJSON.Error);
+			},
 			404: function(response){
 				alert("User not found - CPF: " + data.user_cpf);
 			}			
 		}});	
 }
-
 </script>
 </html>

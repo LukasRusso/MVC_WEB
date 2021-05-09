@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Web_API - UI</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script type="text/javascript" src="./ChartJS/chartConfig.js"></script>
 	<style type="text/css">
 		body {
 			background-color: gray;
@@ -20,68 +22,88 @@
 			color: black;
 		}
 		
-		#page {
-			margin: auto;
+		.card {
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 20px;
 			background-color: white;
 			box-shadow: 10px 10px 10px 10px black;
 			border: 2px black solid;
 			border-radius: 10px;
 			text-align: center;
 			width: 70%;
-			height: 100%;
+			height: 100%;			
 		}
 		
 	</style>
 </head>
 <body>
-	<div id="page">
+	<div class="card">
 		<h1>Home Page</h1>
 		<div id="user_roles">
+			<h3>User's Commands</h3>
 			<button>
 				<a href="/MVC_WEB/User/registerUser.html"> Register User </a>
 			</button>
 			<button onclick="getCPF('update_user')">
-				<a id="update_user" href="/MVC_WEB/User/updateUser.html"> Update User </a>
+				<a id="update_user" href=""> Update User </a>
 			</button>
 			<button>
 				<a id="delete_user" href="/MVC_WEB/User/deleteUser.html" > Delete User </a>
 			</button>
 			<button onclick="getCPF('get_user')">
-				<a id="get_user" href="/MVC_WEB/UserAPI"> Get User </a>
+				<a id="get_user" href=""> Get User </a>
 			</button>
 			<button>
-				<a href="/MVC_WEB/UserAPI?list_users=true"> List Users </a>
+				<a href="/MVC_WEB/User/listUser.html"> List Users </a>
 			</button>
 		</div>		
 		<div id="address_roles">
+			<h3>Address's Commands</h3>
 			<button onclick="getCPF('register_address')">
-				<a id="register_address" href="/MVC_WEB/Address/registerAddress.html"> Register Address </a>
+				<a id="register_address" href=""> Register Address </a>
 			</button>
-			<button onclick="getAddr('update_address')">
-				<a id="update_address" href="/MVC_WEB/Address/updateAddress.html"> Update Address </a>
+			<button onclick="getCPF('update_address')">
+				<a id="update_address" href=""> Update Address </a>
 			</button>
 			<button>
 				<a href="/MVC_WEB/Address/deleteAddress.html"> Delete Address </a>
 			</button>
-			<button onclick="getCPF()">
-				<a id="" href="/MVC_WEB/Search/findAddress.html"> Get Address </a>
-			</button>
-			<button>
-				<a href="/MVC_WEB/UserAPI?list_users=true"> List Address </a>
-			</button>
-		</div>		
+		</div>	
+		<div id="chart_roles">
+			<h3>Chart's Commands</h3>
+			<button onclick="getChart_UserName('chart_UserName')">Chart User Names</button>
+			<button onclick="getChart_UserAge('chart_UserAge')">Chart User Age</button>
+			<button onclick="getChart_3('Chart_3')">Get 3</button>
+		</div>				
+	</div>
+	<div class="card" id="ChartCard" hidden>
+		<h1>Chart's Information</h1>
+		<div style="display: inline-block;">
+			<canvas id="chart_UserName"></canvas>		
+			<canvas id="chart_UserAge"></canvas>		
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
 	function getCPF(idElement){
 		var cpf = prompt("Please, enter CPF user", "000.000.000-00")
-		console.log(idElement);
+		
 		if(cpf != null){
 			var e = document.getElementById(idElement);	
 			
 			cpf = maskCPF(cpf);			
 			
-			e.setAttribute("href",e.href.split("?")[0] + "?user_cpf=" + cpf);
+			e.setAttribute("href", getRoute(idElement) + "?user_cpf=" + cpf);
+		}
+	}
+	
+	function getRoute(idElement){
+		switch(idElement){
+			case "update_user": { return "/MVC_WEB/User/updateUser.html"; }
+			case "get_user": { return "/MVC_WEB/UserAPI"; }
+			case "register_address": { return "/MVC_WEB/Address/registerAddress.html"; }
+			case "update_address": { return "/MVC_WEB/Address/updateAddress.html"; }
 		}
 	}
 	

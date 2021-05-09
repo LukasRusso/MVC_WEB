@@ -13,7 +13,7 @@ CREATE TABLE User (
 
 CREATE TABLE Address (
     addr_id int AUTO_INCREMENT PRIMARY KEY,
-    addr_userId int NOT NULL,
+    addr_userId int NOT NULL UNIQUE,
     addr_street varchar(255),
     addr_number int,
     addr_city varchar(50),

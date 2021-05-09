@@ -16,7 +16,7 @@ public class AddressDAO {
 		connection = new ConnectionSQL().getConnection();
 	}
 	
-	public int saveAddres(Address addr) {
+	public int saveAddress(Address addr) {
 		String sqlStatement = "INSERT INTO Web_API.Address ("
 				+ "addr_userId, "
 				+ "addr_street, "
@@ -38,14 +38,15 @@ public class AddressDAO {
 			statement.setString(6, addr.getAddr_country());	
 			statement.setString(7, addr.getAddr_cep());	
 			
-			statement.executeUpdate();
+			return statement.executeUpdate();
 		} catch (SQLException e) {			
-			e.printStackTrace();			
+			e.printStackTrace();
+			
+			if(e.getMessage().contains("Duplicate entry"))
+				return 409;
+			
 			return 404;
 		}	
-		
-		System.out.println("(AddresDAO) address - Saved");
-		return 200;
 	}
 	
 	public Address getAddress(Long idUser) {
@@ -61,7 +62,7 @@ public class AddressDAO {
 			while(rs.next()) {				
 				addr.setAddr_id(rs.getLong("addr_id"));				
 				addr.setAddr_userId(rs.getLong("addr_userId"));				
-				addr.setAddr_street(rs.getDate("addr_street").toString());				
+				addr.setAddr_street(rs.getString("addr_street"));				
 				addr.setAddr_number(rs.getInt("addr_number"));				
 				addr.setAddr_city(rs.getString("addr_city"));				
 				addr.setAddr_state(rs.getString("addr_state"));
@@ -74,6 +75,7 @@ public class AddressDAO {
 			return null;
 		}
 		
+		System.out.println("(AddresDAO) address - GET");
 		return addr;
 	}
 	
@@ -140,19 +142,18 @@ public class AddressDAO {
 		return addrs;		
 	}
 
-	public int deleteUser(Long idUser) {
+	public int deleteAddres(Long idUser) {
 		try {
 			String sqlStatement = "Delete FROM Web_API.Address WHERE addr_userId = ?";
 			
 			PreparedStatement statement = connection.prepareStatement(sqlStatement);			
 			statement.setLong(1, idUser);	
 			
-			statement.executeQuery();			
+			return statement.executeUpdate();			
 		} catch (SQLException e) {			
-			e.printStackTrace();			
+			e.printStackTrace();
+			
 			return 404;
 		}
-		
-		return 200;
 	}
 }

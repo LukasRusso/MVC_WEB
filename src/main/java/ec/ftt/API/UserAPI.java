@@ -34,14 +34,15 @@ public class UserAPI extends HttpServlet {
 		List<User> users = new ArrayList<User>();
 		UserDAO dao = new UserDAO();	
 		
-		try {
+		try {	
 			String resp = "";
+			response.setStatus(200);
 			response.setContentType("application/json");			
 			boolean list =  Boolean.parseBoolean(request.getParameter("list_users"));			
 			if(list) {
 				users = dao.listUser();				
 				
-				resp +=  "{\"Status\":" + 200 + ",\"Users\":[";
+				resp +=  "{\"Status\": 200, \"Users\":[ ";
 				while(!users.isEmpty()) {					
 					resp += gson.toJson(users.remove(0)) + ",";
 				}	
@@ -58,23 +59,22 @@ public class UserAPI extends HttpServlet {
 			//CPF is a required field			
 			if(users.get(0).getCpf() != null) {
 				response.setStatus(200);
-				response.getWriter().append("{\"Status\": " + 200 + ",\"User\": " + gson.toJson(users.remove(0)) + "}");
+				response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(users.remove(0)) + "}");
 			}
 			else {
 				response.setStatus(404);
-				response.getWriter().append("{\"Status\": " + 404 + "}");
+				response.getWriter().append("{\"Status\": 404, \"Error\": \"CPF - " +
+						request.getParameter("user_cpf") + " not found\"}");
 			}
-			
-			response.setStatus(200);
 		}
 		catch(Exception e) {
-			response.getWriter().append("{\"Status\": " + 500 + "}");
-			e.printStackTrace();
 			response.setStatus(500);
+			response.getWriter().append("{\"Status\": 500 }");
+			e.printStackTrace();			
 		}	
 	}
 	
-	//Method Post
+	//Method Post(OK)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User user = createUser(request);
@@ -94,7 +94,8 @@ public class UserAPI extends HttpServlet {
 			switch(resp) {
 				case 1:{
 					response.setStatus(201);
-					response.getWriter().append("{\"Status\": 201, \"User\": " + gson.toJson(user) + "}");
+					response.getWriter().append("{\"Status\": 201, \"User\": " + 
+							gson.toJson(user) + "}");
 					break;
 				}
 				case 0:{
@@ -128,7 +129,7 @@ public class UserAPI extends HttpServlet {
 		}		
 	}
 	
-	//Method Put
+	//Method Put()
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			
 			User user = createUser(postRequestBody(request));
@@ -142,7 +143,7 @@ public class UserAPI extends HttpServlet {
 				resp = 0;				
 			}
 			else {
-				resp = dao.saveUser(user);
+				resp = dao.updateUser(user);
 			}			
 			
 			response.setContentType("application/json");
@@ -181,9 +182,10 @@ public class UserAPI extends HttpServlet {
 	//Method Delete
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			User user = createUser(postRequestBody(request));
 			UserDAO dao = new UserDAO();
 			response.setContentType("application/json");
-			int resp = dao.deleteUser(request.getParameter("user_cpf"));
+			int resp = dao.deleteUser(user.getCpf());
 					
 			switch(resp) {
 				case 0:{
@@ -197,9 +199,9 @@ public class UserAPI extends HttpServlet {
 					response.getWriter().append("{\"Status\": 204}");
 					break;
 				}
-				case 400:{
-					response.setStatus(400);
-					response.getWriter().append("{\"Status\": 400}");
+				case 409:{
+					response.setStatus(409);
+					response.getWriter().append("{\"Status\": 409, \"Error\": \"First delete User\'s address\"}");
 					break;
 				}
 				case 500:{
@@ -267,28 +269,26 @@ public class UserAPI extends HttpServlet {
 	}
 	
 	//Get body from request
-	private String postRequestBody(HttpServletRequest request) {
-		if("PUT".equalsIgnoreCase(request.getMethod())) {
-			Scanner s = null;
-			String value = "";
-			try {
-				s = new Scanner(request.getInputStream(), "UTF-8");
-				
-				while(s.hasNext()) {
-					value += s.next();
-				}
-		
-				return value;
+	private String postRequestBody(HttpServletRequest request) {		
+		Scanner s = null;
+		String value = "";
+		try {
+			s = new Scanner(request.getInputStream(), "UTF-8");
+			
+			while(s.hasNext()) {
+				value += s.next();
 			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-			finally {
-				if(s != null)
-					s.close();
-			}
+	
+			System.out.println(value);
+			return value;
 		}
-		
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(s != null)
+				s.close();
+		}
 		return "";
 	}
 }
