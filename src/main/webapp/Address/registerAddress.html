@@ -76,7 +76,8 @@
 				document.getElementById("addr_userId").value = response.User.id;
 			},
 			error: function(){
-				window.location.href = route;
+				alert("User not found!");
+				window.location.href = "/MVC_WEB/User/userConfig.html";
 			}});
 	}
 	
@@ -87,8 +88,8 @@
 		$.ajax({url: routerAddres, method: "GET"})
 			.done(function (response) {				
 				var data = response;				
-				if(data.Status == 200){
-					window.location.href = routerUpdateAddress;
+				if(data.Status == 200){					
+					window.location.href = "/MVC_WEB/User/userConfig.html";
 				}
 			})
 	}

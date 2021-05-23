@@ -73,9 +73,7 @@ public class AddressDAO {
 		} catch (SQLException e) {			
 			e.printStackTrace();			
 			return null;
-		}
-		
-		System.out.println("(AddresDAO) address - GET");
+		}		
 		return addr;
 	}
 	
@@ -84,7 +82,7 @@ public class AddressDAO {
 				+ "addr_street = ?,"
 				+ "addr_number = ?,"
 				+ "addr_city = ?,"
-				+ "addr_state = ? "	
+				+ "addr_state = ?,"	
 				+ "addr_country = ?,"
 				+ "addr_cep = ? "	
 				+ "WHERE addr_userId = ?";	
@@ -100,14 +98,11 @@ public class AddressDAO {
 			statement.setString(6, addr.getAddr_cep());	
 			statement.setLong(7, addr.getAddr_userId());
 			
-			statement.executeUpdate();
+			return statement.executeUpdate();
 		} catch (SQLException e) {			
 			e.printStackTrace();			
 			return 404;
-		}	
-		
-		System.out.println("(AddressDAO) Address - Updated");
-		return 200;
+		}
 	}
 	
 	public List<Address> listAddress(){

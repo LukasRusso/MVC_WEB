@@ -71,6 +71,33 @@ public class UserDAO {
 		return user;
 	}
 	
+	public User getUserCPF(String cpf) {
+		User user = new User();
+		try {
+			String sqlStatement = "SELECT * FROM Web_API.User WHERE user_cpf = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sqlStatement);			
+			statement.setString(1, cpf);								
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {				
+				user.setId(rs.getLong("user_id"));				
+				user.setName(rs.getString("user_name"));				
+				user.setBirthday(rs.getDate("user_birthday").toString());				
+				user.setEmail(rs.getString("user_email"));		
+				user.setPass(rs.getString("user_pass"));		
+				user.setColor(rs.getString("user_color"));				
+				user.setCpf(rs.getString("user_cpf"));
+			}			
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();			
+			return null;
+		}
+		
+		return user;
+	}
+	
 	public int updateUser(User user) {
 		String sqlStatement = "UPDATE Web_API.User SET "
 				+ "user_name = ?,"

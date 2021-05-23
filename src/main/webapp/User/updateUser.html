@@ -65,22 +65,22 @@
 	function updateHtml() {	
 		var route = "/MVC_WEB/UserAPI?user_cpf=" + window.location.search.split('=')[1];
 				
-		$.ajax({url: route, method: "GET"})
-			.done(function (response) {				
-				var data = response;
-				
-				if(data.Status == 200){
-					document.getElementById("user_id").value = data.User.id;
-					document.getElementById("user_name").value = data.User.name;
-					document.getElementById("user_birthday").value = new Date(data.User.birthday).toISOString().split('T')[0];
-					document.getElementById("user_email").value = data.User.email;
-					document.getElementById("user_color").value = data.User.color;
-					document.getElementById("user_cpf").value = data.User.cpf;
-				}
-				else{
-					window.location.href = route;
-				}
-			})
+		$.ajax({
+			url: route, 
+			headers: {"Content-Type":"application/json", "charset":"UTF-8"}, 
+			method: "GET", 
+			success: function(data){
+				document.getElementById("user_id").value = data.User.id;
+				document.getElementById("user_name").value = data.User.name;
+				document.getElementById("user_birthday").value = new Date(data.User.birthday).toISOString().split('T')[0];
+				document.getElementById("user_email").value = data.User.email;
+				document.getElementById("user_color").value = data.User.color;
+				document.getElementById("user_cpf").value = data.User.cpf;
+			},
+			error: function(response){
+				alert("User not found!");
+				window.location.href = "/MVC_WEB/User/userConfig.html";
+			}});
 	}
 	
 	function updateUser() {	
@@ -99,7 +99,7 @@
 			headers: {"Content-Type":"application/json", "charset":"UTF-8"}, 
 			method: "PUT", data: user,
 			success: function(){
-				window.location.href = route + "?user_cpf=" + user.user_cpf;
+				window.location.href = "/MVC_WEB/User/indexUser.html";
 			},
 			error: function(response){
 				alert(response.status + " - User couldn't be update!");

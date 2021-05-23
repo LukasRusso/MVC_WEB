@@ -64,7 +64,7 @@ public class AddressAPI extends HttpServlet {
 			addrs.add(new AddressDAO().getAddress(Long.parseLong(parameter)));
 			
 			//userID is a required field			
-			if(addrs.get(0).getAddr_userId() != 0) {
+			if(addrs.get(0).getAddr_userId() > 0) {
 				response.setStatus(200);
 				response.getWriter().append("{\"Status\": 200 ,\"Address\": " + gson.toJson(addrs.remove(0)) + "}");
 			}
@@ -76,12 +76,10 @@ public class AddressAPI extends HttpServlet {
 		catch(Exception e) {
 			e.printStackTrace();
 			response.setStatus(500);
-			response.getWriter().append("{\"Status\": 500}");			
-			
+			response.getWriter().append("{\"Status\": 500 }");
 		}	
 	}
-	
-	
+		
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			
 			Address addr = createAddress(postRequestBody(request));
@@ -115,12 +113,12 @@ public class AddressAPI extends HttpServlet {
 				}
 				case 500:{
 					response.setStatus(500);
-					response.getWriter().append("{\"Status\": 500");
+					response.getWriter().append("{\"Status\": 500 }");
 					break;
 				}
 				default:{
 					response.setStatus(500);
-					response.getWriter().append("{\"Status\": 500");
+					response.getWriter().append("{\"Status\": 500 }");
 					break;
 				}
 			}

@@ -33,12 +33,14 @@ public class UserAPI extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<User> users = new ArrayList<User>();
 		UserDAO dao = new UserDAO();	
+		User user = new User();
 		
 		try {	
 			String resp = "";
 			response.setStatus(200);
 			response.setContentType("application/json");			
-			boolean list = Boolean.parseBoolean(request.getParameter("list_users"));		
+			boolean list = Boolean.parseBoolean(request.getParameter("list_users"));
+			boolean cpf = (request.getParameter("user_cpf") != null);	
 			
 			String email = request.getParameter("user_email");		
 			String pass = request.getParameter("user_pass");		
@@ -58,9 +60,24 @@ public class UserAPI extends HttpServlet {
 				response.setStatus(200);
 				response.getWriter().append(resp);
 				return;
-			}			
+			}	
 			
-			users.add(new UserDAO().getUser(email));
+			if(cpf) {
+				user = dao.getUserCPF(request.getParameter("user_cpf"));
+				if(user.getCpf() == null) {
+					response.setStatus(404);
+					response.getWriter().append("{\"Status\": 404 }");
+				}
+				else {
+					response.setStatus(200);				
+					user.setPass("*****Nothing here to see*****");	
+					response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(user) + "}");
+				}				
+						
+				return;
+			}	
+			
+			user = dao.getUser(email);
 			
 			//CPF is a required field			
 			if(users.get(0).getCpf() != null) {
@@ -69,9 +86,9 @@ public class UserAPI extends HttpServlet {
 					response.getWriter().append("{\"Status\": 403,\"Error\": \"Forbidden\"}");					
 				} else {
 					response.setStatus(200);
-					User u = users.remove(0);
-					u.setPass("*****Nothing here to see*****");	
-					response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(u) + "}");
+					user = users.remove(0);
+					user.setPass("*****Nothing here to see*****");	
+					response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(user) + "}");
 				}
 			}
 			else {

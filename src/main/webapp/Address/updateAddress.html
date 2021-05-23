@@ -80,7 +80,8 @@
 					getAddress(data.User.id);
 				}
 				else{
-					window.location.href = routerAddres;
+					alert("User not found!");
+					window.location.href = "/MVC_WEB/User/userConfig.html";
 				}
 			})
 	}
@@ -102,7 +103,8 @@
 					document.getElementById("addr_cep").value = data.Address.addr_cep;
 				}
 				else{
-					window.location.href = routerAddres;
+					alert("Addres not found!");
+					window.location.href = "/MVC_WEB/User/userConfig.html";
 				}
 			})
 	}
@@ -119,15 +121,12 @@
 			"addr_country": document.getElementById("addr_country").value,
 			"addr_cep": document.getElementById("addr_cep").value
 		};
-		
-		console.log(address);
-		
 		$.ajax({
 			url: route, 
 			headers: {"Content-Type":"application/json", "charset":"UTF-8"}, 
 			method: "PUT", data: address,})
 			.done(function(){
-				window.location.href = route + "?addr_userId=" + address.addr_userId;
+				window.location.href = "/MVC_WEB/User/userConfig.html";
 			});
 	}
 	
