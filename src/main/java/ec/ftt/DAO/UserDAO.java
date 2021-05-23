@@ -15,7 +15,7 @@ public class UserDAO {
 	
 	public int saveUser(User user) {
 		String sqlStatement = "INSERT INTO Web_API.User (user_name, user_birthday, user_email, "
-				+ "user_color, user_cpf) VALUES(?, ?, ?, ?, ?)";	
+				+ "user_pass, user_color, user_cpf) VALUES(?, ?, ?, ?, ?, ?)";	
 		
 		try {
 			if(connection == null) {
@@ -27,35 +27,38 @@ public class UserDAO {
 			statement.setString(1, user.getName());		
 			statement.setDate(2, new Date(user.getBirthday().getTime()));
 			statement.setString(3, user.getEmail());	
-			statement.setString(4, user.getColor());	
-			statement.setString(5, user.getCpf());	
+			statement.setString(4, user.getPass());	
+			statement.setString(5, user.getColor());	
+			statement.setString(6, user.getCpf());	
 			
 			return statement.executeUpdate();
 		} catch (SQLException e) {		
 			e.printStackTrace();
 			
-			if(e.getMessage().contains("Duplicate entry")) 
-				return 409;					
+			if(e.getMessage().contains("Duplicate entry")) {
+				if(e.getMessage().contains("user_email")) return 2;
+				else if(e.getMessage().contains("user_cpf")) return 3;					
+			}
 			
 			return 500;
 		}
 	}
 	
-	public User getUser(String cpf) {
+	public User getUser(String email) {
 		User user = new User();
-		
 		try {
-			String sqlStatement = "SELECT * FROM Web_API.User WHERE user_cpf = ?";
+			String sqlStatement = "SELECT * FROM Web_API.User WHERE user_email = ?";
 			
 			PreparedStatement statement = connection.prepareStatement(sqlStatement);			
-			statement.setString(1, cpf);								
+			statement.setString(1, email);								
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {				
 				user.setId(rs.getLong("user_id"));				
 				user.setName(rs.getString("user_name"));				
 				user.setBirthday(rs.getDate("user_birthday").toString());				
-				user.setEmail(rs.getString("user_email"));				
+				user.setEmail(rs.getString("user_email"));		
+				user.setPass(rs.getString("user_pass"));		
 				user.setColor(rs.getString("user_color"));				
 				user.setCpf(rs.getString("user_cpf"));
 			}			
@@ -111,7 +114,8 @@ public class UserDAO {
 				user.setId(rs.getLong("user_id"));				
 				user.setName(rs.getString("user_name"));				
 				user.setBirthday(rs.getDate("user_birthday").toString());				
-				user.setEmail(rs.getString("user_email"));				
+				user.setEmail(rs.getString("user_email"));	
+				user.setPass(rs.getString("user_pass"));	
 				user.setColor(rs.getString("user_color"));				
 				user.setCpf(rs.getString("user_cpf"));
 				

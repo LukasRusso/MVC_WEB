@@ -38,13 +38,19 @@ public class UserAPI extends HttpServlet {
 			String resp = "";
 			response.setStatus(200);
 			response.setContentType("application/json");			
-			boolean list =  Boolean.parseBoolean(request.getParameter("list_users"));			
+			boolean list = Boolean.parseBoolean(request.getParameter("list_users"));		
+			
+			String email = request.getParameter("user_email");		
+			String pass = request.getParameter("user_pass");		
+			
 			if(list) {
 				users = dao.listUser();				
 				
 				resp +=  "{\"Status\": 200, \"Users\":[ ";
-				while(!users.isEmpty()) {					
-					resp += gson.toJson(users.remove(0)) + ",";
+				while(!users.isEmpty()) {
+					User u = users.remove(0);
+					u.setPass("*****Nothing here to see*****");					
+					resp += gson.toJson(u) + ",";
 				}	
 				resp = resp.substring(0, resp.length() - 1);
 				resp += "]}";
@@ -54,17 +60,23 @@ public class UserAPI extends HttpServlet {
 				return;
 			}			
 			
-			users.add(new UserDAO().getUser(request.getParameter("user_cpf")));
+			users.add(new UserDAO().getUser(email));
 			
 			//CPF is a required field			
 			if(users.get(0).getCpf() != null) {
-				response.setStatus(200);
-				response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(users.remove(0)) + "}");
+				if(!users.get(0).getPass().equals(pass)) {
+					response.setStatus(403);				
+					response.getWriter().append("{\"Status\": 403,\"Error\": \"Forbidden\"}");					
+				} else {
+					response.setStatus(200);
+					User u = users.remove(0);
+					u.setPass("*****Nothing here to see*****");	
+					response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(u) + "}");
+				}
 			}
 			else {
 				response.setStatus(404);
-				response.getWriter().append("{\"Status\": 404, \"Error\": \"CPF - " +
-						request.getParameter("user_cpf") + " not found\"}");
+				response.getWriter().append("{\"Status\": 404 }");
 			}
 		}
 		catch(Exception e) {
@@ -91,24 +103,29 @@ public class UserAPI extends HttpServlet {
 				resp = dao.saveUser(user);
 			}
 			
-			switch(resp) {
-				case 1:{
-					response.setStatus(201);
-					response.getWriter().append("{\"Status\": 201, \"User\": " + 
-							gson.toJson(user) + "}");
-					break;
-				}
+			switch(resp) {				
 				case 0:{
 					response.setStatus(400);
 					response.getWriter().append("{\"Status\": 400" + ","
 							+ " \"Error\": " + gson.toJson(error.substring(0, error.length()-1).split("#")) + "}");
 					break;
 				}
-				//CPF already register
-				case 409:{
+				case 1:{
+					response.setStatus(201);
+					user.setPass("*****Nothing here to see*****");
+					response.getWriter().append("{\"Status\": 201, \"User\": " + 
+							gson.toJson(user) + "}");
+					break;
+				}
+				case 2:{
 					response.setStatus(409);
-					response.getWriter().append("{\"Status\": " + 
-							resp + ", \"Error\": \"CPF Already Register\"}");
+					response.getWriter().append("{\"Status\": 409, \"Error\": \"Email Already Register\"}");
+					break;
+				}
+				//CPF already register
+				case 3:{
+					response.setStatus(409);
+					response.getWriter().append("{\"Status\": 409, \"Error\": \"CPF Already Register\"}");
 					break;
 				}
 				case 500:{
@@ -129,7 +146,7 @@ public class UserAPI extends HttpServlet {
 		}		
 	}
 	
-	//Method Put()
+	//Method Put(OK)
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {			
 			User user = createUser(postRequestBody(request));
@@ -151,6 +168,7 @@ public class UserAPI extends HttpServlet {
 			switch(resp) {
 				case 1:{
 					response.setStatus(200);
+					user.setPass("*****Nothing here to see*****");
 					response.getWriter().append("{\"Status\": 202, \"User\": " + gson.toJson(user) + "}");					
 					break;
 				}
@@ -179,7 +197,7 @@ public class UserAPI extends HttpServlet {
 		}		
 	}
 	
-	//Method Delete
+	//Method Delete(OK)
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User user = createUser(postRequestBody(request));
@@ -229,6 +247,7 @@ public class UserAPI extends HttpServlet {
 		user.setName(request.getParameter("user_name"));
 		user.setBirthday(request.getParameter("user_birthday"));
 		user.setEmail(request.getParameter("user_email"));
+		user.setPass(request.getParameter("user_pass"));
 		user.setColor(request.getParameter("user_color"));
 		user.setCpf(request.getParameter("user_cpf"));
 		
@@ -253,6 +272,10 @@ public class UserAPI extends HttpServlet {
 			}
 				
 			else if(chaveValor[0].contains("user_email")) {
+				user.setEmail(chaveValor[1]);
+			}
+			
+			else if(chaveValor[0].contains("user_pass")) {
 				user.setEmail(chaveValor[1]);
 			}
 				

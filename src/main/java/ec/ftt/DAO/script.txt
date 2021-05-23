@@ -6,7 +6,8 @@ CREATE TABLE User (
     user_id int AUTO_INCREMENT PRIMARY KEY,
     user_name varchar(255) NOT NULL,
     user_birthday date, 
-    user_email varchar(255),
+    user_pass varchar(255) NOT NULL,
+    user_email varchar(255) NOT NULL UNIQUE,
     user_color varchar(7),
     user_cpf varchar(14) NOT NULL UNIQUE    
 );
@@ -21,4 +22,36 @@ CREATE TABLE Address (
     addr_country varchar(50),
     addr_cep varchar(9),
     FOREIGN KEY(addr_userId) REFERENCES User(user_id)
+);
+
+CREATE TABLE MOVIE (
+	ID int AUTO_INCREMENT PRIMARY KEY,
+	NAME varchar(250) DEFAULT NULL,
+	PRODUCER varchar(250) DEFAULT NULL,
+	GENRE varchar(250) DEFAULT NULL,
+	RELEASE_DATE date DEFAULT NULL
+);
+
+CREATE TABLE GAME (
+	ID int AUTO_INCREMENT PRIMARY KEY,
+	NAME varchar(250) DEFAULT NULL,
+	PRODUCER varchar(250) DEFAULT NULL,
+	GENRE varchar(250) DEFAULT NULL,
+	RELEASE_DATE date DEFAULT NULL
+);
+
+CREATE TABLE UserMovies(
+	id int AUTO_INCREMENT PRIMARY KEY,
+	userId int NOT NULL UNIQUE,
+	moviesId int NOT NULL UNIQUE,
+	FOREIGN KEY(userId) REFERENCES User(user_id),
+	FOREIGN KEY(moviesId) REFERENCES MOVIE(ID)
+);
+
+CREATE TABLE UserGames(
+	id int AUTO_INCREMENT PRIMARY KEY,
+	userId int NOT NULL UNIQUE,
+	gamesId int NOT NULL UNIQUE,
+	FOREIGN KEY(userId) REFERENCES User(user_id),
+	FOREIGN KEY(gamesId) REFERENCES GAME(ID)
 );

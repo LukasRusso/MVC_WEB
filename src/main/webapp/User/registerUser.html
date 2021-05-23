@@ -46,12 +46,21 @@
 				<input type="email" id="user_email" name="user_email" placeholder="user@email.com" required>
 			</p>
 			<p>
+				<label id="label_pass" for="user_pass">Pass: </label>
+				<input type="password" id="user_pass" name="user_pass" placeholder="***************" required>
+			</p>
+			<p>
+				<label id="label_pass_Conf" for="user_pass_conf">Pass Conf: </label>
+				<input type="password" id="user_pass_conf" name="user_pass_conf" onkeyup="checkPass()" placeholder="***************" required>
+			</p>
+			<p>
 				<label for="user_color">Color:</label>
 				<input type="color" id="user_color" name="user_color">
 			</p>			
+			
 			<p>						
 				<input type="submit" value="Register">				
-				<button><a href="/MVC_WEB/home.html" style="text-decoration: none; color: black;">Cancel</a></button>						
+				<button><a href="/MVC_WEB/login.html" style="text-decoration: none; color: black;">Cancel</a></button>						
 			</p>			
 		</form>	
 	</div>
@@ -66,6 +75,37 @@
 			else if(i == 9) value +=  cpf.substr(7, 2) + "-" + cpf.substr(i, 2);			
 		}
 		element.value = value;
+	}
+	
+	function checkPass(){
+		var pass = document.getElementById("user_pass").value;
+		var confPass = document.getElementById("user_pass_conf").value;	
+		
+		var labelConfPass = document.getElementById("label_pass_Conf");
+				
+		if(pass == confPass){	
+			labelConfPass.innerHTML = "";
+			labelConfPass.innerHTML = "Pass Conf: ";
+			
+			var span = document.createElement("span");
+			span.innerHTML = "&#10003;";
+			span.style.color = "green";
+			span.style.fontSize = "20px";
+			
+			labelConfPass.appendChild(span);
+			
+		}
+		else {
+			labelConfPass.innerHTML = "";			
+			labelConfPass.innerHTML = "Pass Conf: ";
+			
+			var span = document.createElement("span");
+			span.innerHTML = "&#215;";
+			span.style.color = "red";
+			span.style.fontSize = "20px";			
+				
+			labelConfPass.appendChild(span);
+		}		
 	}
 </script>
 </html>

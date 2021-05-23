@@ -10,6 +10,7 @@ public class User {
 	private String name;
 	private Date birthday;
 	private String email;
+	private String pass;
 	private String color;
 	private String cpf;
 	
@@ -44,6 +45,14 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
 	public String getColor() {
 		return color;
 	}
@@ -64,8 +73,7 @@ public class User {
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);			
 			this.setBirthday(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (ParseException e) {			
 			e.printStackTrace();
 		}
 	}
@@ -84,6 +92,7 @@ public class User {
 				"Name: " + this.getName() + ", " +
 				"Birthday: " + this.getBirthday() +  ", " +
 				"Email: " + this.getEmail() + ", " +
+				"Pass: *********, " +
 				"Color (Hex): #" + this.getColor() + ", " +
 				"CPF: " + this.getCpf();
 	}

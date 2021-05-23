@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Filmes</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Home</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/MVC_WEB/Game/game.html">Games</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/MVC_WEB/Movie/movie.html">Filmes</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="col-sm">
+        <h1>Filmes</h1>
+
+        <form method="post" action="/MVC_WEB/MovieAPI">
+          <div class="form-group">
+            <label for="movie-name">Nome: </label>
+            <input
+              type="text"
+              class="form-control"
+              id="movie-name"
+              name="movie-sname"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="movie-producer">Produtora: </label>
+            <input
+              type="text"
+              class="form-control"
+              id="movie-producer"
+              name="movie-producer"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="movie-genre">Gênero: </label>
+            <input
+              type="text"
+              class="form-control"
+              id="movie-genre"
+              name="movie-genre"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="movie-releaseDate">Data de Lançamento: </label>
+            <input
+              type="date"
+              id="movie-releaseDate"
+              name="movie-releaseDate"
+              class="form-control"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
