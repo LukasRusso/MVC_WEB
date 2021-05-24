@@ -50,10 +50,12 @@ public class UserDAO {
 			String sqlStatement = "SELECT * FROM Web_API.User WHERE user_email = ?";
 			
 			PreparedStatement statement = connection.prepareStatement(sqlStatement);			
-			statement.setString(1, email);								
+			statement.setString(1, email);			
+			
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {				
+				System.out.println(rs.getLong("user_id"));
 				user.setId(rs.getLong("user_id"));				
 				user.setName(rs.getString("user_name"));				
 				user.setBirthday(rs.getDate("user_birthday").toString());				

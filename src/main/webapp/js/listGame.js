@@ -11,6 +11,17 @@ const deleteGame = (id) => {
   }
 }
 
+const favorGame = (id) => {
+  console.log(id)
+  const request = new XMLHttpRequest();
+  const url = "/MVC_WEB/UserGamesAPI?game-id=" + id + "&user-id=" + user.id
+  request.open("POST", url, true);
+  request.send();
+  request.onload = function () {
+    document.location.reload(true);
+  }
+}
+
 const deleteMovie = (id) => {
   console.log(id)
   const request = new XMLHttpRequest();
@@ -35,7 +46,7 @@ const updateMovie = (id) => {
     window.localStorage.setItem('localMovie', this.responseText);
     window.location.href = "update-movie.html";
   }
-  
+
 
 }
 
@@ -82,8 +93,8 @@ request.onload = function () {
     row.appendChild(releaseDate);
 
     var action = document.createElement("td");
-   
-	var u = document.createElement("button")
+
+    var u = document.createElement("button")
     u.innerHTML = "Append"
     u.classList.add("btn-success");
     u.classList.add("btn");
@@ -92,7 +103,7 @@ request.onload = function () {
       appendGame(line.id)
     })
     action.appendChild(u)
-    
+
     var a = document.createElement("button")
     a.innerHTML = "Edit"
     a.classList.add("btn-warning");
@@ -101,9 +112,9 @@ request.onload = function () {
       console.log("update")
       updateGame(line.id)
     })
- 	action.appendChild(a)
+    action.appendChild(a)
 
-	var d = document.createElement("button")
+    var d = document.createElement("button")
     d.innerHTML = "Delete"
     d.classList.add("btn-danger");
     d.classList.add("btn");
@@ -112,6 +123,15 @@ request.onload = function () {
       deleteGame(line.id)
     })
     action.appendChild(d)
+
+    var f = document.createElement("button")
+    f.innerHTML = "Favoritar"
+    f.classList.add("btn-primary");
+    f.classList.add("btn");
+    f.addEventListener("click", function () {
+      favorGame(line.id)
+    })
+    action.appendChild(f)
 
     row.appendChild(action)
     table.appendChild(row);
