@@ -77,17 +77,16 @@ public class UserAPI extends HttpServlet {
 				return;
 			}	
 			
+			System.out.println(email);
 			user = dao.getUser(email);
 			
 			//CPF is a required field			
-			if(users.get(0).getCpf() != null) {
-				if(!users.get(0).getPass().equals(pass)) {
+			if(user.getCpf() != null) {
+				if(!user.getPass().equals(pass)) {
 					response.setStatus(403);				
 					response.getWriter().append("{\"Status\": 403,\"Error\": \"Forbidden\"}");					
 				} else {
 					response.setStatus(200);
-					user = users.remove(0);
-					user.setPass("*****Nothing here to see*****");	
 					response.getWriter().append("{\"Status\": 200,\"User\": " + gson.toJson(user) + "}");
 				}
 			}
