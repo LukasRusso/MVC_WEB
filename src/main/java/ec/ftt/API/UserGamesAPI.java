@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import ec.ftt.DAO.GameDao;
 import ec.ftt.DAO.UserDAO;
+import ec.ftt.DAO.UserGameDao;
 import ec.ftt.Model.Game;
 import ec.ftt.Model.User;
 
@@ -27,9 +28,9 @@ public class UserGamesAPI extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("user_id"));	
+		Long userId = Long.parseLong(request.getParameter("user_id"));	
 		List<Game> games = new ArrayList<Game>();
-		GameDao dao = new GameDao();
+		UserGameDao dao = new UserGameDao();
 		Gson gson =  new Gson();
 		
 		try {	
@@ -59,6 +60,12 @@ public class UserGamesAPI extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Long userId = Long.parseLong(request.getParameter("user-id"));
+		Long gameId = Long.parseLong(request.getParameter("game-id"));
+		
+		UserGameDao gameDao = new UserGameDao();
+
+		gameDao.addGameUser(userId,gameId);
 		
 	}
 	
