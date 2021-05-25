@@ -94,16 +94,6 @@ request.onload = function () {
 
     var action = document.createElement("td");
 
-    var u = document.createElement("button")
-    u.innerHTML = "Append"
-    u.classList.add("btn-success");
-    u.classList.add("btn");
-    u.addEventListener("click", function () {
-      console.log("append")
-      appendGame(line.id)
-    })
-    action.appendChild(u)
-
     var a = document.createElement("button")
     a.innerHTML = "Edit"
     a.classList.add("btn-warning");
