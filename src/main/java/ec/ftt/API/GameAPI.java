@@ -69,7 +69,7 @@ public class GameAPI extends HttpServlet  {
 
 		gameDao.addGame(u);
 
-		response.sendRedirect("/MVC_WEB/User/indexUser.html");
+		response.sendRedirect("/MVC_WEB/Game/allGames.html");
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

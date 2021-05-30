@@ -24,6 +24,7 @@ public class MovieDao {
 			preparedStatement.setString(4, movie.getReleaseDate());
 
 
+			System.out.println(preparedStatement);
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
