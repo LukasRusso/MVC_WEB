@@ -111,14 +111,14 @@ request.onerror = function () {
 request.send();
 
 const requestMovie = new XMLHttpRequest();
-requestMovie.open("GET", "/MVC_WEB/MovieAPI");
+requestMovie.open("GET", "/MVC_WEB/UserMoviesAPI?user_id=" + user.id);
 
 requestMovie.onload = function () {
   const response = JSON.parse(this.responseText);
   console.log(JSON.parse(this.responseText));
 
   const table = document.querySelector(".table-movie");
-  for (let line of response) {
+  for (let line of response.Movies) {
     var row = document.createElement("tr");
     var id = document.createElement("td");
     id.innerHTML = line.id;
