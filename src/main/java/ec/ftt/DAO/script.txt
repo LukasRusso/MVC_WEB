@@ -43,12 +43,15 @@ CREATE TABLE GAME (
 CREATE TABLE UserMovie(
 	id int AUTO_INCREMENT PRIMARY KEY,
 	userId int NOT NULL,
-	moviesId int NOT NULL
+	moviesId int NOT NULL,
+	FOREIGN KEY(userId) REFERENCES User(user_id),
+	FOREIGN KEY(moviesId) REFERENCES MOVIE(ID)
 );
 
 CREATE TABLE UserGame(
 	id int AUTO_INCREMENT PRIMARY KEY,
 	userId int NOT NULL,
-	gamesId int NOT NULL
+	gamesId int NOT NULL,
+	FOREIGN KEY(userId) REFERENCES User(user_id),
+	FOREIGN KEY(gamesId) REFERENCES GAME(ID)
 );
-
