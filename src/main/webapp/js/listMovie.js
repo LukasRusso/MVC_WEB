@@ -4,9 +4,12 @@
 
 const user = JSON.parse(localStorage.getItem("User"));
 
-const deleteGame = (id) => {  
+let localMovie = {}
+
+const deleteMovie = (id) => {
+  console.log(id)
   const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/GameAPI?game-id=" + id
+  const url = "/MVC_WEB/MovieAPI?movie-id=" + id
   request.open("DELETE", url, true);
   request.send();
   request.onload = function () {
@@ -14,9 +17,10 @@ const deleteGame = (id) => {
   }
 }
 
-const favorGame = (id) => {  
+const favorMovie = (id) => {
+  console.log(id)
   const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/UserGamesAPI?game-id=" + id + "&user-id=" + user.id
+  const url = "/MVC_WEB/UserMoviesAPI?movie-id=" + id + "&user-id=" + user.id
   request.open("POST", url, true);
   request.send();
   request.onload = function () {
@@ -24,29 +28,27 @@ const favorGame = (id) => {
   }
 }
 
-const updateGame = (id) => {  
+const updateMovie = (id) => {
+  console.log(id)
   const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/GameAPI?game-id=" + id
+  const url = "/MVC_WEB/MovieAPI?movie-id=" + id
   request.open("GET", url, true);
   request.send();
   request.onload = function () {
-    console.log(this.responseText)
-    window.localStorage.setItem('localGame', this.responseText);
-    window.location.href = "/MVC_WEB/Game/update-game.html";
+    window.localStorage.setItem('localMovie', this.responseText);
+   	window.location.href = "/MVC_WEB/Movie/update-movie.html";
   }
 }
 
-let localGame = {}
-
 const request = new XMLHttpRequest();
-request.open("GET", "/MVC_WEB/GameAPI");
+request.open("GET", "/MVC_WEB/MovieAPI");
 
 request.onload = function () {
   console.log(this.responseText);
   const response = JSON.parse(this.responseText);
   console.log(JSON.parse(this.responseText));
 
-  const table = document.querySelector(".table-game");
+  const table = document.querySelector(".table-movie");
   for (let line of response) {
     var row = document.createElement("tr");
     var id = document.createElement("td");
@@ -72,7 +74,7 @@ request.onload = function () {
     a.classList.add("btn-warning");
     a.classList.add("btn");
     a.addEventListener("click", function () {      
-      updateGame(line.id)
+      updateMovie(line.id)
     })
     action.appendChild(a)
 
@@ -81,7 +83,7 @@ request.onload = function () {
     d.classList.add("btn-danger");
     d.classList.add("btn");
     d.addEventListener("click", function () {      
-      deleteGame(line.id)
+      deleteMovie(line.id)
     })
     action.appendChild(d)
 
@@ -90,7 +92,7 @@ request.onload = function () {
     f.classList.add("btn-primary");
     f.classList.add("btn");
     f.addEventListener("click", function () {
-      favorGame(line.id)
+      favorMovie(line.id)
     })
     action.appendChild(f)
 

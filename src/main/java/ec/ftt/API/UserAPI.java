@@ -75,9 +75,8 @@ public class UserAPI extends HttpServlet {
 				}				
 						
 				return;
-			}	
+			}			
 			
-			System.out.println(email);
 			user = dao.getUser(email);
 			
 			//CPF is a required field			

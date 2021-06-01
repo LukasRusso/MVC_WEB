@@ -11,18 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-
-import ec.ftt.DAO.GameDao;
-import ec.ftt.DAO.UserDAO;
 import ec.ftt.DAO.UserGameDao;
 import ec.ftt.Model.Game;
-import ec.ftt.Model.User;
+
 
 @WebServlet("/UserGamesAPI")
 public class UserGamesAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Gson gson =  new Gson();	
-    
+
     public UserGamesAPI() {
         super();
     }
@@ -55,26 +51,40 @@ public class UserGamesAPI extends HttpServlet {
 			response.getWriter().append("{\"Status\": 500 }");
 			e.printStackTrace();			
 		}	
-		
-		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long userId = Long.parseLong(request.getParameter("user-id"));
-		Long gameId = Long.parseLong(request.getParameter("game-id"));
-		
-		UserGameDao gameDao = new UserGameDao();
+		try {
+			response.setStatus(200);			
+			Long userId = Long.parseLong(request.getParameter("user-id"));
+			Long gameId = Long.parseLong(request.getParameter("game-id"));
+			
+			UserGameDao dao = new UserGameDao();
 
-		gameDao.addGameUser(userId,gameId);
-		
+			dao.addGameUser(userId,gameId);
+		}
+		catch(Exception e) {
+			response.setStatus(500);
+			response.getWriter().append("{\"Status\": 500 }");
+			e.printStackTrace();			
+		}	
 	}
 	
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		try {
+			response.setStatus(200);
+			Long userId = Long.parseLong(request.getParameter("user-id"));
+			Long gameId = Long.parseLong(request.getParameter("game-id"));
+			
+			UserGameDao dao = new UserGameDao();
+
+			dao.deleteGame(userId, gameId);
+		}
+		catch(Exception e) {
+			response.setStatus(500);
+			response.getWriter().append("{\"Status\": 500 }");
+			e.printStackTrace();			
+		}	
 	}
 
 }

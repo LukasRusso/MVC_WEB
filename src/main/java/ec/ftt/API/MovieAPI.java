@@ -67,7 +67,7 @@ public class MovieAPI extends HttpServlet  {
 
 		movieDao.addMovie(u);
 
-		response.sendRedirect("index.html");
+		response.sendRedirect("/MVC_WEB/User/indexUser.html");
 
 	}
 

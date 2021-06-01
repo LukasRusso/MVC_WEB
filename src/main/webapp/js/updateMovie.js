@@ -16,12 +16,12 @@ releaseDate.value = localMovie.releaseDate
 
 const updateMovie = () => {
     const request = new XMLHttpRequest();
-    const url = "/FTT-WEB-091/movie?movie-name=" + movieName.value + "&movie-producer=" + producer.value + "&movie-genre=" + genre.value + "&movie-releaseDate=" + releaseDate.value + "&movie-id=" + id.value;
+    const url = "/MVC_WEB/MovieAPI?movie-name=" + movieName.value + "&movie-producer=" + producer.value + "&movie-genre=" + genre.value + "&movie-releaseDate=" + releaseDate.value + "&movie-id=" + id.value;
     request.open("PUT", url, true);
     request.send();
     request.onload = function () {
         window.localStorage.setItem('localMovie', "");
-        window.location.href = "index.html";
+        window.location.href = "/MVC_WEB/User/indexUser.html";
     }
 
 }
