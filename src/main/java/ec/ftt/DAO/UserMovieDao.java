@@ -2,7 +2,6 @@ package ec.ftt.DAO;
 
 import java.sql.*;
 import java.util.*;
-
 import ec.ftt.Model.Movie;
 
 public class UserMovieDao {
@@ -12,13 +11,14 @@ public class UserMovieDao {
 		connection = new ConnectionSQL().getConnection();
 	} 
 
+
 	public void addMovieUser(Long userId,Long movieId) {
 
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("INSERT INTO Web_API.UserMovies (userId, moviesId) "
-							+ "VALUES (?, ?)");
-			
+							+ "VALUES (?, ?)");			
+
 			preparedStatement.setLong(1, userId);
 			preparedStatement.setLong(2, movieId);
 
@@ -36,15 +36,16 @@ public class UserMovieDao {
 					.prepareStatement("DELETE FROM Web_API.UserMovies WHERE userId=? and moviesId=?");
 
 			preparedStatement.setLong(1, userId);
-			preparedStatement.setLong(2, moviesId);
-			
+			preparedStatement.setLong(2, moviesId);			
+
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	} 
 
+	} 
+      
 	public List<Movie> getAllMovieUser(Long userId) {
 		List<Movie> movieList = new ArrayList<Movie>();
 

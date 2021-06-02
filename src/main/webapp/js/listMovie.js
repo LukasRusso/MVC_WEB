@@ -1,7 +1,6 @@
 /**
  *
  */
-
 const user = JSON.parse(localStorage.getItem("User"));
 
 let localMovie = {}
@@ -73,7 +72,7 @@ request.onload = function () {
     a.innerHTML = "Edit"
     a.classList.add("btn-warning");
     a.classList.add("btn");
-    a.addEventListener("click", function () {      
+    a.addEventListener("click", function () { 
       updateMovie(line.id)
     })
     action.appendChild(a)
@@ -82,7 +81,7 @@ request.onload = function () {
     d.innerHTML = "Delete"
     d.classList.add("btn-danger");
     d.classList.add("btn");
-    d.addEventListener("click", function () {      
+    d.addEventListener("click", function () {
       deleteMovie(line.id)
     })
     action.appendChild(d)

@@ -28,7 +28,7 @@ public class MovieAPI extends HttpServlet  {
 	public void destroy() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setStatus(418);
+		
 
 		String movieId = request.getParameter("movie-id");
 
@@ -52,7 +52,7 @@ public class MovieAPI extends HttpServlet  {
 			response.getWriter().append(gson.toJson(movies));
 		} 
 
-
+		response.setStatus(200);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,10 +64,12 @@ public class MovieAPI extends HttpServlet  {
 				request.getParameter("movie-releaseDate")
 				);
 		MovieDao movieDao = new MovieDao();
+		System.out.println(request.getParameter("movie-name"));
+		System.out.println(u.getName());
 
 		movieDao.addMovie(u);
 
-		response.sendRedirect("/MVC_WEB/User/indexUser.html");
+		response.sendRedirect("/MVC_WEB/User/indexUser.html");		
 
 	}
 

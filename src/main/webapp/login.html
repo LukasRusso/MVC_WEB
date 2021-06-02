@@ -64,6 +64,11 @@
         border-top-left-radius: 0;
         border-top-right-radius: 0;
       }
+      body{
+        display: flex;
+        flex-direction: column;
+        padding:32px;
+      }
     </style>
     <title>Login</title>
   </head>
@@ -96,8 +101,11 @@
       >
         <button class="btn btn-light">Register</button>
       </a>
+      
     </div>
+    <div id="alert"></div>
   </body>
+  <script src="./js/externalAPI.js" type="text/javascript"></script>   
   <script type="text/javascript">
     function login() {
       var email = document.getElementById("user_email").value;
