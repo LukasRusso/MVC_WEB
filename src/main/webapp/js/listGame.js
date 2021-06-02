@@ -1,59 +1,30 @@
+/**
+ *
+ */
+
 const user = JSON.parse(localStorage.getItem("User"));
 
-const deleteGame = (id) => {
-  console.log(id)
+const deleteGame = (id) => {  
   const request = new XMLHttpRequest();
   const url = "/MVC_WEB/GameAPI?game-id=" + id
   request.open("DELETE", url, true);
   request.send();
   request.onload = function () {
-    document.location.reload(true);
+    document.location.href = "/MVC_WEB/User/indexUser.html";
   }
 }
 
-const favorGame = (id) => {
-  console.log(id)
+const favorGame = (id) => {  
   const request = new XMLHttpRequest();
   const url = "/MVC_WEB/UserGamesAPI?game-id=" + id + "&user-id=" + user.id
   request.open("POST", url, true);
   request.send();
   request.onload = function () {
-    document.location.reload(true);
+    document.location.href = "/MVC_WEB/User/indexUser.html";
   }
 }
 
-const deleteMovie = (id) => {
-  console.log(id)
-  const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/MovieAPI?movie-id=" + id
-  request.open("DELETE", url, true);
-  request.send();
-  request.onload = function () {
-    document.location.reload(true);
-  }
-
-}
-
-let localMovie = {}
-
-const updateMovie = (id) => {
-  console.log(id)
-  const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/MovieAPI?movie-id=" + id
-  request.open("GET", url, true);
-  request.send();
-  request.onload = function () {
-    window.localStorage.setItem('localMovie', this.responseText);
-    window.location.href = "update-movie.html";
-  }
-
-
-}
-
-let localGame = {}
-
-const updateGame = (id) => {
-  console.log(id)
+const updateGame = (id) => {  
   const request = new XMLHttpRequest();
   const url = "/MVC_WEB/GameAPI?game-id=" + id
   request.open("GET", url, true);
@@ -61,9 +32,11 @@ const updateGame = (id) => {
   request.onload = function () {
     console.log(this.responseText)
     window.localStorage.setItem('localGame', this.responseText);
-    window.location.href = "update-game.html";
+    window.location.href = "/MVC_WEB/Game/update-game.html";
   }
 }
+
+let localGame = {}
 
 const request = new XMLHttpRequest();
 request.open("GET", "/MVC_WEB/GameAPI");
@@ -98,8 +71,7 @@ request.onload = function () {
     a.innerHTML = "Edit"
     a.classList.add("btn-warning");
     a.classList.add("btn");
-    a.addEventListener("click", function () {
-      console.log("update")
+    a.addEventListener("click", function () {      
       updateGame(line.id)
     })
     action.appendChild(a)
@@ -108,8 +80,7 @@ request.onload = function () {
     d.innerHTML = "Delete"
     d.classList.add("btn-danger");
     d.classList.add("btn");
-    d.addEventListener("click", function () {
-      console.log("delete")
+    d.addEventListener("click", function () {      
       deleteGame(line.id)
     })
     action.appendChild(d)

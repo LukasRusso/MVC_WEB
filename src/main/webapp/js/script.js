@@ -3,17 +3,18 @@ const user = JSON.parse(localStorage.getItem("User"));
 const deleteGame = (id) => {
   console.log(id)
   const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/GameAPI?game-id=" + id
+  const url = "/MVC_WEB/UserGamesAPI?game-id=" + id + "&user-id=" + user.id
   request.open("DELETE", url, true);
   request.send();
   request.onload = function () {
     document.location.reload(true);
   }
 }
+
 const deleteMovie = (id) => {
   console.log(id)
   const request = new XMLHttpRequest();
-  const url = "/MVC_WEB/MovieAPI?movie-id=" + id
+  const url = "/MVC_WEB/UserMoviesAPI?movie-id=" + id + "&user-id=" + user.id
   request.open("DELETE", url, true);
   request.send();
   request.onload = function () {
@@ -30,12 +31,10 @@ const updateMovie = (id) => {
   const url = "/MVC_WEB/MovieAPI?movie-id=" + id
   request.open("GET", url, true);
   request.send();
-  request.onload = function () {
+  request.onload = function () {  	
     window.localStorage.setItem('localMovie', this.responseText);
-    window.location.href = "update-movie.html";
+    window.location.href = "/MVC_WEB/Movie/update-movie.html";
   }
-  
-
 }
 
 let localGame = {}
@@ -46,10 +45,9 @@ const updateGame = (id) => {
   const url = "/MVC_WEB/GameAPI?game-id=" + id
   request.open("GET", url, true);
   request.send();
-  request.onload = function () {
-    console.log(this.responseText)
+  request.onload = function () { 
     window.localStorage.setItem('localGame', this.responseText);
-    window.location.href = "update-game.html";
+    window.location.href = "/MVC_WEB/Game/update-game.html";
   }
 }
 
@@ -83,8 +81,7 @@ request.onload = function () {
     d.innerHTML = "Apagar"
     d.classList.add("btn-danger");
     d.classList.add("btn");
-    d.addEventListener("click", function () {
-      console.log("delete")
+    d.addEventListener("click", function () {     
       deleteGame(line.id)
     })
     action.appendChild(d)
@@ -93,15 +90,13 @@ request.onload = function () {
     u.innerHTML = "Editar"
     u.classList.add("btn-warning");
     u.classList.add("btn");
-    u.addEventListener("click", function () {
-      console.log("update")
+    u.addEventListener("click", function () {      
       updateGame(line.id)
     })
     action.appendChild(u)
     row.appendChild(action)
     table.appendChild(row);
-  }
-  console.log(table)
+  }  
 };
 
 request.onerror = function () {
@@ -136,12 +131,12 @@ requestMovie.onload = function () {
     releaseDate.innerHTML = line.releaseDate;
     row.appendChild(releaseDate);
     var action = document.createElement("td");
+    
     var d = document.createElement("button")
     d.innerHTML = "Apagar"
     d.classList.add("btn-danger");
     d.classList.add("btn");
-    d.addEventListener("click", function () {
-      console.log("delete")
+    d.addEventListener("click", function () {      
       deleteMovie(line.id)
     })
     action.appendChild(d)
@@ -150,8 +145,7 @@ requestMovie.onload = function () {
     u.innerHTML = "Editar"
     u.classList.add("btn-warning");
     u.classList.add("btn");
-    u.addEventListener("click", function () {
-      console.log("update")
+    u.addEventListener("click", function () {    
       updateMovie(line.id)
     })
     action.appendChild(u)
@@ -159,7 +153,6 @@ requestMovie.onload = function () {
 
     table.appendChild(row);
   }
-  console.log(table)
 };
 
 requestMovie.onerror = function () {

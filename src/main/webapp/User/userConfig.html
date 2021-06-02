@@ -3,30 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <title>User Config</title>
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
-      type="text/javascript"
-    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="../ChartJS/chartConfig.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.all.min.js"></script>
-
     <style type="text/css">
       body {
         align-items: center;
+        width: 100%; 
+        height: 100%;
+        position: absolute;
       }
-
+      
+      h4, h1{
+      	text-align: center;
+		padding: 10px;
+      }
+      .dot {
+      	font-size: 20px;
+      	padding: 5px;
+      }
+      
       .charts {
         padding-bottom: "20px";
       }
@@ -34,6 +36,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-bottom: 10px;
+		border: 2px gray solid;
+		box-shadow: 3px 3px 3px 3px gray;
       }
     </style>
   </head>
@@ -58,32 +63,27 @@
               <a class="nav-link" href="/MVC_WEB/Game/game.html">Games</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/MVC_WEB/Game/allGames.html"
-                >All Games</a
-              >
+              <a class="nav-link" href="/MVC_WEB/Game/allGames.html">All Games</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/MVC_WEB/Movie/movie.html">Filmes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/MVC_WEB/Movie/allMovies.html"
-                >All Filmes</a
-              >
+              <a class="nav-link" href="/MVC_WEB/Movie/allMovies.html">All Filmes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/MVC_WEB/User/indexUser.html"
-                >All Data</a
+              <a class="nav-link" href="/MVC_WEB/User/indexUser.html">User Config</a
               >
             </li>
           </ul>
         </div>
       </nav>
     </header>
-    <div class="col-sm">
+    <div class="col-sm" style="background-color: rgba(184, 184, 184, 0.5); padding: 10px 0px; width: 100%; height: 100%;">
       <div class="card container p-3">
         <h1>All User's Configurations</h1>
         <div id="user_roles">
-          <h3>User's Commands</h3>
+          <h4><span class="dot">&#8226;</span>User's Commands</h4>
           <a id="update_user" href="">
             <button class="btn btn-warning" onclick="getCPF('update_user')">
               Update User
@@ -104,7 +104,7 @@
           </a>
         </div>
         <div id="address_roles">
-          <h3>Address's Commands</h3>
+          <h4><span class="dot">&#8226;</span>Address's Commands</h4>
           <a id="register_address" href="">
             <button
               class="btn btn-success"
@@ -125,7 +125,7 @@
       </div>
       <div class="card container p-3">
         <div id="chart_roles">
-          <h3>Chart's User Commands</h3>
+          <h4><span class="dot">&#8226;</span>Chart's User Commands</h4>
           <button class="btn btn-primary" onclick="getChart_UserName()">
             Chart User Names
           </button>
@@ -143,7 +143,7 @@
       </div>
       <div class="card container p-3">
         <div id="chart_roles">
-          <h3>Chart's Address Commands</h3>
+          <h4><span class="dot">&#8226;</span>Chart's Address Commands</h4>
           <button class="btn btn-primary" onclick="getChart_AddressState()">
             Chart Address State
           </button>

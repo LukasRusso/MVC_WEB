@@ -12,7 +12,7 @@ public class ConnectionSQL {
 			String sqlDriver = "com.mysql.cj.jdbc.Driver";
 			String sqlUrl = "jdbc:mysql://127.0.0.1:3306";
 			String sqlUser = "root";
-			String sqlPass = "password";		
+			String sqlPass = "@FzsGzd03";		
 			
 			try {				
 				Class.forName(sqlDriver);				

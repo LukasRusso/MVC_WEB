@@ -1,4 +1,9 @@
+/**
+ *
+ */
 const user = JSON.parse(localStorage.getItem("User"));
+
+let localMovie = {}
 
 const deleteMovie = (id) => {
   console.log(id)
@@ -7,7 +12,7 @@ const deleteMovie = (id) => {
   request.open("DELETE", url, true);
   request.send();
   request.onload = function () {
-    document.location.reload(true);
+    document.location.href = "/MVC_WEB/User/indexUser.html";
   }
 }
 
@@ -18,11 +23,9 @@ const favorMovie = (id) => {
   request.open("POST", url, true);
   request.send();
   request.onload = function () {
-    document.location.reload(true);
+    document.location.href = "/MVC_WEB/User/indexUser.html";
   }
 }
-
-let localMovie = {}
 
 const updateMovie = (id) => {
   console.log(id)
@@ -32,10 +35,8 @@ const updateMovie = (id) => {
   request.send();
   request.onload = function () {
     window.localStorage.setItem('localMovie', this.responseText);
-    window.location.href = "update-movie.html";
+   	window.location.href = "/MVC_WEB/Movie/update-movie.html";
   }
-
-
 }
 
 const request = new XMLHttpRequest();
@@ -71,8 +72,7 @@ request.onload = function () {
     a.innerHTML = "Edit"
     a.classList.add("btn-warning");
     a.classList.add("btn");
-    a.addEventListener("click", function () {
-      console.log("update")
+    a.addEventListener("click", function () { 
       updateMovie(line.id)
     })
     action.appendChild(a)
@@ -82,7 +82,6 @@ request.onload = function () {
     d.classList.add("btn-danger");
     d.classList.add("btn");
     d.addEventListener("click", function () {
-      console.log("delete")
       deleteMovie(line.id)
     })
     action.appendChild(d)
