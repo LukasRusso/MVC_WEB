@@ -17,7 +17,7 @@ public class UserGameDao {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("INSERT INTO Web_API.UserGame (userId, gamesId) "
+					.prepareStatement("INSERT INTO Web_API.UserGames (userId, gamesId) "
 							+ "VALUES (?, ?)");
 
 
@@ -35,7 +35,7 @@ public class UserGameDao {
 		try {
 
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("DELETE FROM Web_API.UserGame WHERE userId=? and gamesId=?");
+					.prepareStatement("DELETE FROM Web_API.UserGames WHERE userId=? and gamesId=?");
 
 			preparedStatement.setLong(1, userId);
 			preparedStatement.setLong(2, gameId);
@@ -51,7 +51,7 @@ public class UserGameDao {
 		List<Game> gameList = new ArrayList<Game>();
 
 		try {
-			String sql = "SELECT * FROM Web_API.UserGame \r\n"
+			String sql = "SELECT * FROM Web_API.UserGames \r\n"
 					+ "inner join  Web_API.GAME\r\n"
 					+ "on gamesId = Web_API.GAME.id\r\n"
 					+ "WHERE userId = ?";

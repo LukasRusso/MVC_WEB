@@ -52,6 +52,7 @@ public class UserMoviesAPI extends HttpServlet {
 			response.getWriter().append("{\"Status\": 500 }");
 			e.printStackTrace();			
 		}	
+	}
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -85,4 +86,5 @@ public class UserMoviesAPI extends HttpServlet {
 			response.getWriter().append("{\"Status\": 500 }");
 			e.printStackTrace();			
 		}	
+	}
 }
